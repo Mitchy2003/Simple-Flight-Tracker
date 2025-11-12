@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import AirlineForms from './AirlineForms'
 
+//The AuthBox tracks whether or not the user is logged in, and displays the correct HTML corresponding to whether or not the user is logged in.
+/*
+If the user is not logged in, the will see the FlightTable and then below it they will see two forms, one to register an account,
+and the other, to log into an account.
+If the user is logged in, they will see the FlightTable with additional columns for Edit and Delete, and they will see the AirlineForms component below.
+*/
 function AuthBox({ setUserLoggedIn, setFlights }) {
     const [username, setUsername] = useState('')
+    //Simple Login Function
     async function login(event) {
         event.preventDefault()
         try {
@@ -19,12 +26,14 @@ function AuthBox({ setUserLoggedIn, setFlights }) {
             if (res.ok) {
                 const responseUsername = await res.json()
                 setUsername(responseUsername.username)
+                //set userLoggedIn to true after a successful login to display the correct HTML after login.
                 setUserLoggedIn(true)
             }
         } catch (err) {
             console.error(err)
         }
     }
+    //Simple Register Function
     async function register(event) {
         event.preventDefault()
         try {
@@ -41,12 +50,14 @@ function AuthBox({ setUserLoggedIn, setFlights }) {
             if (res.ok) {
                 const responseUsername = await res.json()
                 setUsername(responseUsername.username)
+                ////set userLoggedIn to true after to display the correct HTML after registering.
                 setUserLoggedIn(true)
             }
         } catch (err) {
             console.error(err)
         }
     }
+    //Simple Logout
     async function logout(event) {
         event.preventDefault()
         try {
@@ -56,6 +67,7 @@ function AuthBox({ setUserLoggedIn, setFlights }) {
             })
             if (res.ok) {
                 await res.json()
+                //nullify the username attribute, and set userLoggedIn to false to display the correct HTML.
                 setUsername('')
                 setUserLoggedIn(false)
             }
@@ -64,7 +76,9 @@ function AuthBox({ setUserLoggedIn, setFlights }) {
         }
     }
 
+    //checks to see whether or not the user is logged in.
     if (username !== '' && username) {
+        //if so, display a little welcome message, add a logout button, and display the AirlineForms component.
         return (
             <div>
                 <h2>Welcome, {username}!</h2>
@@ -74,6 +88,7 @@ function AuthBox({ setUserLoggedIn, setFlights }) {
             </div>
         )
     } else {
+        //if not, display a login and register form.
         return (
             <div>
                 <h2>Login</h2>

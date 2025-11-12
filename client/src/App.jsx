@@ -1,3 +1,4 @@
+//imports
 import { useState, useEffect } from 'react'
 import FlightTable from './FlightTable'
 import AuthBox from './AuthBox'
@@ -6,6 +7,7 @@ function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(false)
   const [flights, setFlights] = useState([])
 
+  //Fetch the flights from the database on startup.
   useEffect(() => {
     const fetchFlights = async () => {
       try {
@@ -26,6 +28,20 @@ function App() {
     fetchFlights()
   }, [])
 
+  /*
+  This HTML will go into the "root" div that is created in index.html
+  
+  For Example, the end result will be,
+
+  <div class="root">
+    <div>
+      <div className="header">
+      (and so on...)
+      </div>
+    </div>
+  </div>
+  */
+ 
   return (
     <div>
       <div className="header">

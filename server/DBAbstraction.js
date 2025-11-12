@@ -58,7 +58,7 @@ class DBAbstraction {
         return new Promise((resolve, reject) => {
             //this.db.exec to run multiple sql statements
             this.db.exec(sql, (err) => {
-                //if err !=== null
+                //if err !== null
                 if (err) {
                     reject(err)
                 } else {    

@@ -1,4 +1,6 @@
+//The FlightTable is the table that will display all of the flights to the user, it will also take into account if the user is logged in or not.
 function FlightTable({ userLoggedIn, flights, setFlights }) {
+    //To cancel a flight, the user simply can click on the "Cancel Flight" button that will be displayed if they are logged in.
     async function cancelFlight(event) {
         event.preventDefault()
         try {
@@ -15,6 +17,7 @@ function FlightTable({ userLoggedIn, flights, setFlights }) {
             console.error(err)
         }
     }
+    //To open a flight, the user can conversely click on the "Open Flight" button which is only visible when the user is logged in and the flight is cancelled.
     async function openFlight(event) {
         event.preventDefault()
         try {
@@ -31,6 +34,7 @@ function FlightTable({ userLoggedIn, flights, setFlights }) {
             console.error(err)
         }
     }
+    //To delete a flight, the user can click on the "Delete Flight" Button which is only visible when the user is logged in.
     async function deleteFlight(event) {
         event.preventDefault()
         try {
@@ -48,7 +52,9 @@ function FlightTable({ userLoggedIn, flights, setFlights }) {
         }
     }
     
+    //Generate HTML based on if the user is logged in or not and if there are any flights in the database.
     if (userLoggedIn === true && flights) {
+        //if so, return an HTML Table with the columns (Airline, Route, Boarding, Takeoff, Landing, Cancelled?, Edit, and Delete)
         return (
             <table className="table table-bordered table-hover table-secondary">
                 <thead>
@@ -84,7 +90,14 @@ function FlightTable({ userLoggedIn, flights, setFlights }) {
                 </tbody>
             </table>
         )
+        /*
+        At line 84, the table is simply checking to see if the flight is in fact cancelled or not, 
+        and will output the Open button HTML if it is and the Cancel button HTML if it isnt.
+        This is important because the correct button needs to be present so the table calls the correct function when the button is clicked.
+        */
     } else {
+        //if not, return the same table without the Edit or Delete Columns.
+        //meaning the user does not have to be logged in to see the flights but they must be logged in to modify them.
         return (
             <table className="table table-bordered table-hover table-secondary">
                 <thead>

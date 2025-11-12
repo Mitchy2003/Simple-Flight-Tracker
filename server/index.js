@@ -1,4 +1,6 @@
 'use strict'
+//FlightTracker Backend
+//Node Packages
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -6,6 +8,7 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 const cors = require('cors')
 const path = require('path')
+//Custom DBAbstraction
 const DBAbstraction = require('./DBAbstraction')
 const db = new DBAbstraction(path.join('./data/flights.sqlite'))
 const app = express()
@@ -19,6 +22,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+//Initialization on port 53140
 db.init()
     .then(() => {
         app.listen(53140, () => {
@@ -63,6 +67,7 @@ async function formatFlight(flight) {
 //routes
 app.post('/flights/all', async (req, res) => {
     try {
+        //get all of the flights and then format them.
         const flights = Array.from(await db.getAllFlights())
         const formattedFlights = []
         for (let i = 0; i < flights.length; i++) {

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 
+//AirlineForms is the function that handles rendering of the forms for the database.
 function AirlineForms({ setFlights }) {
     const [airlines, setAirlines] = useState([])
     const [locations, setLocations] = useState([])
     
+    //Fetch all of the airlines and locations on startup for the dropdown.
     useEffect(() => {
         const fetchAirlines = async () => {
             try {
@@ -37,6 +39,8 @@ function AirlineForms({ setFlights }) {
         fetchLocations()
     }, [])
 
+    //Add a location to the database
+    //Locations have an Airport Name, an Abbreviation of that name, a City and Country Name, with an optional Province/State Name.
     async function addLocation(event) {
         event.preventDefault()
         try {
@@ -69,6 +73,8 @@ function AirlineForms({ setFlights }) {
             console.error(err)
         }
     }
+    //Add an airline to the database
+    //Airlines have just a Name, and an Abbreviation for that name.
     async function addAirline(event) {
         event.preventDefault()
         try {
@@ -90,6 +96,14 @@ function AirlineForms({ setFlights }) {
             console.error(err)
         }
     }
+    //Add a flight to the database
+    /*
+    Flights have a Flight Code (Format: 'AA-1234' Two letter airline abbreviation, with a unique four digit number, seperated by a dash.) 
+    flight codes are unique identifiers for flights.
+    Flights have an Airline (which is retreived from the database), an origin location and a destination location. (retreived from the database.)
+    Flights also have a boarding, takeoff, and landing time which are inputted by the user, in addition to a boolean indicating 
+    whether the flight has been cancelled or not which can be modified later.
+    */
     async function addFlight(event) {
         event.preventDefault()
         try {
@@ -128,6 +142,15 @@ function AirlineForms({ setFlights }) {
         }
     }
 
+    //AirlineForms consists of three forms that all interact with the database.
+    
+    /*
+    A form for adding a location.
+    A form for adding an airline.
+    A form for adding a flight.
+
+    Options in the dropdown menus are all pulled directly from the database.
+    */
     return (
         <div>
             <div className="container">
